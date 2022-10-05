@@ -6,6 +6,10 @@ console.log('listning on port : 3000 and running on http://localhost:3000/');
 app.use(express.static('public'));
 var io = socket(server);
 
+app.get("/", (req, res) => res.type('html').send(html));
+
+//app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
 //listner d'une nouvelle connection
 io.on('connection',EventNewConnection);
 function EventNewConnection(socket){

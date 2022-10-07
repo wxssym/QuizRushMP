@@ -52,7 +52,7 @@ function EventDisconnect(socket){
             for (let pla = 0; pla < lobbies[lob].players.length; pla++){
                 if (lobbies[lob].players[pla].socketid == socket.id && lobbies[lob].players[pla].isHost == false ){
                     console.log(`${lobbies[lob].players[pla].player_name} disconnected from ${lob}`);
-                    lobbies[lob].splice(pla, 1);
+                    lobbies[lob].players.splice(pla, 1);
                     break;
                 }else if (lobbies[lob].players[pla].socketid == socket.id && lobbies[lob].players[pla].isHost == true ) {
                     if (lobbies[lob].players.length > 1){

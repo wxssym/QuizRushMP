@@ -8,11 +8,12 @@ var io = socket(server);
 
 //listner d'une nouvelle connection
 io.on('connection',EventNewConnection);
+
 function EventNewConnection(socket){
     console.log('new connection with a user established : '+ socket.id);
     EventJoinLobby(socket);
     EventDisconnect(socket);
-};
+}
 
 //Joining creating a lobby event
 var lobbies = new Object();
@@ -42,7 +43,7 @@ function EventJoinLobby(socket){
             io.to(lobbyname).emit('lobbyJoined',lobbies[lobbyname].players);
         };
     });
-};
+}
 
 //event de déconnection
 function EventDisconnect(socket){
@@ -71,7 +72,7 @@ function EventDisconnect(socket){
             };
         };
     });
-;}
+}
 
 // class de joueur
 function player(name,room,id) {
@@ -85,7 +86,7 @@ function player(name,room,id) {
         this.player_case = this.player_case + points;
     };
 }
-
+// class de lobby
 function lobby(lobbyname) {
     this.players = [];
     this.lobbyname = lobbyname;
@@ -93,7 +94,7 @@ function lobby(lobbyname) {
     this.status = 'in lobby';
 
     this.change_status = function (newstatus){
-        switch  (newtatus){
+        switch  (newstatus){
             case 'in lobby':
                 this.status = newstatus;
                 break;
@@ -105,7 +106,6 @@ function lobby(lobbyname) {
         };
     };
 }
-
 
 //vérificateur de nom de joueur
 function isNameTaken(name,lobbyname){

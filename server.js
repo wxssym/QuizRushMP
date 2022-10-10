@@ -25,22 +25,24 @@ function EventJoinLobby(socket){
                     lobbies[lobbyname].players.push(new player(name,lobbyname,socket.id));
                     socket.join(lobbyname);
                     console.log(`${name} joined lobby : ${lobbyname} hosted by ${lobbies[lobbyname].host}`);
-                    io.to(lobbyname).emit('lobbyJoined',lobbies[lobbyname].players);
+                    io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
                     socket.to(lobbyname).emit('new player joined',lobbies[lobbyname].players);
                 } else {
-                    socket.emit('nameTaken',name);
+                    io.to(socket.id).emit('nameTaken',name);
                 };
             } else {
-                socket.emit('in game',lobbyname);
+                io.to(socket.id).emit('in game',lobbyname);
             }
         } else {
             lobbies[lobbyname] = new lobby(lobbyname);
             lobbies[lobbyname].players.push(new player(name,lobbyname,socket.id));
             lobbies[lobbyname].host = name;
-            socket.join(lobbyname);
             lobbies[lobbyname].players[0].isHost = true;
+            socket.join(lobbyname);
+            
+
             console.log(`${name} hosted a lobby ${lobbyname}`);
-            io.to(lobbyname).emit('lobbyJoined',lobbies[lobbyname].players);
+            io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
         };
     });
 }
@@ -59,6 +61,7 @@ function EventDisconnect(socket){
                         console.log(`the host ${lobbies[lob].players[pla].player_name} disconnected from ${lob}`);
                         lobbies[lob].players.splice(pla, 1);
                         lobbies[lob].players[0].isHost = true;
+                        lobbies[lob].host = lobbies[lob].players[0].player_name;
                         console.log(`the new host of ${lob} is ${lobbies[lob].players[0].player_name}`);
                         break;
                     } else if (lobbies[lob].players.length == 1) {

@@ -4,19 +4,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>p5.js example</title>
+  <title>Quiz Rush MP</title>
+  <link href="/style.css" rel="stylesheet">
 
 
-  <script src="libraries/p5.js"></script>
+
+  <script src="/libraries/p5.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script>
+    function refreshPage(){
+      window.location.reload();
+    } 
+  </script>
   
 
   <!-- <script src="../addons/p5.sound.js"></script> -->
-  <script src="app.js" defer></script>
+  <script src="/app.js" ></script>
+  <script src="/srcs/MainMenuUI.js" ></script>
+  <script src="/srcs/lobbyUI.js" ></script>
 </head>
 
 <body>
-  <main>
+  <main id="main" class="main_style">
   </main>
 </body>
 

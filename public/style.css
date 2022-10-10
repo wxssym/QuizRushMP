@@ -1,0 +1,40 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.p5Canvas{
+    position: absolute;
+    z-index: -10;
+}
+
+.main_style{
+    min-height: 100vh;
+    background-color: rgb(232, 232, 232);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Panel_class{
+    background: white;
+    min-height: 80vh;
+    width: 60%;
+
+}
+
+.TextBox_class{
+
+}
+
+.Buttons_class{
+
+}

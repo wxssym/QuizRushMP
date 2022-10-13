@@ -18,23 +18,66 @@ body {
 
 .main_style{
     min-height: 100vh;
-    background-color: rgb(232, 232, 232);
+    background-color: rgb(49, 59, 83);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .Panel_class{
-    background: white;
+    background: linear-gradient(to top right, rgba(255,255,255,0.7), rgba(255,255,255,0.3)) ;
     min-height: 80vh;
     width: 60%;
+    border-radius: 20px;
 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
-.TextBox_class{
+.Panel_buttons_div_class{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+}
 
+
+.TextBox_class{
+    width: 60%;
+    padding:8px;
+    text-align: center;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid hsla(0,0%,100%,.2);
+    margin-top: 5px;
 }
 
 .Buttons_class{
+    padding: 10px;
+    text-align: center;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: 1px solid hsla(0,0%,100%,.2);
 
+    margin-top: 5px;
+    margin-inline: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+}
+
+.Buttons_class:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    border : 1px solid rgba(255, 255, 255, 0.3);
 }

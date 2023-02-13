@@ -26,7 +26,7 @@ function EventJoinLobby(socket){
                     socket.join(lobbyname);
                     console.log(`${name} joined lobby : ${lobbyname} hosted by ${lobbies[lobbyname].host}`);
                     io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
-                    socket.to(lobbyname).emit('new player joined',lobbies[lobbyname].players);
+                    socket.to(lobbyname).emit('playerJoined',lobbies[lobbyname].players);
                 } else {
                     io.to(socket.id).emit('nameTaken',name);
                 };
@@ -40,12 +40,13 @@ function EventJoinLobby(socket){
             lobbies[lobbyname].players[0].isHost = true;
             socket.join(lobbyname);
             
-
+    
             console.log(`${name} hosted a lobby ${lobbyname}`);
             io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
         };
     });
 }
+
 
 //event de déconnection
 function EventDisconnect(socket){
@@ -55,6 +56,7 @@ function EventDisconnect(socket){
                 if (lobbies[lob].players[pla].socketid == socket.id && lobbies[lob].players[pla].isHost == false ){
                     console.log(`${lobbies[lob].players[pla].player_name} disconnected from ${lob}`);
                     lobbies[lob].players.splice(pla, 1);
+                    socket.to(lob).emit('playerLeave',lobbies[lob].players);
                     break;
                 }else if (lobbies[lob].players[pla].socketid == socket.id && lobbies[lob].players[pla].isHost == true ) {
                     if (lobbies[lob].players.length > 1){
@@ -63,6 +65,7 @@ function EventDisconnect(socket){
                         lobbies[lob].players[0].isHost = true;
                         lobbies[lob].host = lobbies[lob].players[0].player_name;
                         console.log(`the new host of ${lob} is ${lobbies[lob].players[0].player_name}`);
+                        socket.to(lob).emit('playerLeave',lobbies[lob].players);
                         break;
                     } else if (lobbies[lob].players.length == 1) {
                         console.log(`the host ${lobbies[lob].players[pla].player_name} disconnected from ${lob}`);
@@ -76,7 +79,6 @@ function EventDisconnect(socket){
         };
     });
 }
-
 // class de joueur
 function player(name,room,id) {
     this.player_room = room;
@@ -84,7 +86,7 @@ function player(name,room,id) {
     this.player_case = 0;
     this.isHost = false;
     this.socketid = id;
-    this.AvatarUrl = 'https://avatars.dicebear.com/api/croodles-neutral/'+this.player_name+'.svg?size=50&background=%23f0c400';
+    this.AvatarUrl = 'https://api.dicebear.com/5.x/thumbs/svg?seed='+this.player_name;
     this.move_case = function (points) {
         this.player_case = this.player_case + points;
     };
@@ -109,7 +111,6 @@ function lobby(lobbyname) {
         };
     };
 }
-
 //vérificateur de nom de joueur
 function isNameTaken(name,lobbyname){
     taken = false;

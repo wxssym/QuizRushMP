@@ -2,6 +2,7 @@ const socket = io();
 
 var client_name = null;
 var lobby_name = null;
+var r = document.querySelector(':root');
 
 function setup() {
   JoinRoomUI();
@@ -14,8 +15,10 @@ function draw() {
 //Event listner quand on rejoins un lobby
 socket.on('lobbyJoined', (players)=> LobbyUI(players));
 
+socket.on('playerLeave',(players)=> LobbyUI(players))
+
 //listner for new players
-socket.on('new player joined', (players)=> newPlayerInLobby(players));
+socket.on('playerJoined', (players)=> newPlayerInLobby(players));
 
 //Event listner si le nom est pris
 socket.on('nameTaken', (name)=>{

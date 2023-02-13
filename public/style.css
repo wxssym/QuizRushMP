@@ -1,13 +1,21 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root{
-    --main-background-color : rgb(49, 59, 83);
+    --main_background_color : #f4f4f4 ;
+    --panel_background_color : #F4F4F4 ;
+    --panel_textbox : #F4F4F4 ;
+    --shadow_grey : 0px 0px 15px -3px rgba(0, 0, 0, 0.25);
+    --shadow_grey_onfocus: 0px 0px 15px -3px rgba(93, 88, 185, 0.3);
+    
+    --panel_button_blue : #5393F1;
+    --panel_button_blue_onhover : #0067ff;
+    --neon_blue_onhover :  0px 3px 19px 2px rgba(0, 40, 255, 0.2);
+    --Logo_grey : #424954;
+    --Logo_accent : #5BF158;
 }
 
 * {
-    font-family: 'Roboto', sans-serif;
-
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -22,96 +30,168 @@ body {
 
 .main_style{
     min-height: 100vh;
-    background : url(https://mir-s3-cdn-cf.behance.net/project_modules/1400/a4b33886128681.5d909dad47ded.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: var(--main-background-color);
+    background-color: var(--main_background_color);
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .Panel_class{
-    background: linear-gradient(to top right, rgba(255,255,255,0.7), rgba(255,255,255,0.3)) ;
-    min-height: 80vh;
-    width: 60%;
+    background: var(--panel_background_color);
+    min-height: clamp(400px,80vh,80vh);
+    width: clamp(300px, 60vw,60vw);
+    box-shadow: var(--shadow_grey);
     border-radius: 20px;
+}
 
-    box-shadow: 0 0px 5px rgb(0 0 0 / 15%);
-    backdrop-filter: blur(2.5px);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-
+.Panel_class {
     display: flex;
-    gap: 2px;
-    align-items: center;
     justify-content: center;
-    align-content: center;
     flex-wrap: wrap;
     flex-direction: column;
+    row-gap: 20px;
+    align-content: center;
+    padding-bottom: 30px;
+}
+
+.playerCardsCarrousel{
+    display: flex;
+    height: 370px;
+    width: clamp(301px, 59vw,59vw);
+    overflow-y: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: stretch;
+}
+
+.playerCard{
+    height: 240px;
+    width: 200px;
+    background: #4E5868;
+    box-shadow: 0px 3px 11px rgba(0, 0, 0, 0.25);
+    border-radius: 27px;
+    margin: 20px;
+}
+
+.playerCard{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.playerCard:hover{
+    box-shadow: 0px 5px 20px 2px rgb(20 106 243 / 49%);
+    transition: ease-out 0.3s;
 }
 
 
+img.playerImage {
+    border-radius: 15px;
+    height: 100px;
+    filter: drop-shadow(0px 4px 11px rgba(0, 0, 0, 0.25));
+}
 
+.playersCardName{
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    color: rgb(223,223,223);
+}
 
+.Logo_class{
+    max-width: 180px; 
+    height: auto;
+    align-self: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.Logo_class:hover{
+    opacity: 0.8;
+    transition: ease-out 0.3s;
+}
 
 .TextBox_class{
-    width: 60%;
-    padding:8px;
-    text-align: center;
+    background: var(--panel_textbox);
+    box-shadow: var(--shadow_grey);
+    border : none;
     border-radius: 7px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid hsla(0,0%,100%,.2);
-    box-shadow: 0 0px 5px rgb(0 0 0 / 15%);
-    margin-top: 5px;
-    color: rgb(115 115 115 / 71%);
+    height: 40px;
+    width: fit-content;
+    padding-left: 2%;
+    padding-right: 10%;
     transition: ease-out 0.2s;
+    color: rgb(115 115 115 / 71%);
 }
 
-.TextBox_class:focus {
-    border-color: #66afe9;
+.TextBox_class:focus{
+    border-color: var(--panel_button_blue);
     outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-    caret-color: #66afe9;
-    color: rgb(115 115 115 / 71%);
-  }  
+    caret-color: var(--panel_button_blue);
+    color: rgba(115, 115, 115, 0.832);
+    box-shadow: var(--shadow_grey_onfocus);
+}  
 
 .TextBox_class:hover{
-    background-color: rgba(255, 255, 255, 0.5);
-    border : 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow_grey_onfocus);
 }
 
 .Panel_buttons_div_class{
-    margin-top: 3px;
-    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.Lobby_buttons_div_class{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
-    align-content: center;
-    gap : 5px;
+    align-items: flex-start;
 }
 
 .Buttons_class{
-    text-align: center;
-    background: rgba(255, 255, 255, 0.3);
-    color: rgb(115 115 115 / 71%);
-    border: 1px solid hsla(0,0%,100%,.2);
-    box-shadow: 0 0px 5px rgb(0 0 0 / 15%);
+    background: var(--panel_button_blue);
+    box-shadow:var(--shadow_grey);
+    border-radius: 7px;
+    border : none;
+    height : 40px;
+    width: fit-content;
 
-    /* margin-inline: 100%; */
-    text-transform: uppercase;
-    cursor: pointer;
-    width: -webkit-fill-available;
-    height: 30px;
-    /* border: none; */
-    border-radius: 8px;
+    padding-inline: 15px;
+
+    cursor : pointer;
+    color: var(--panel_background_color);
+
     transition: ease-out 0.2s;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 24px;
 }
 
 .Buttons_class:hover{
-    background-color: rgba(255, 255, 255, 0.5);
-    border : 1px solid rgba(255, 255, 255, 0.3);
-    color: rgba(115, 115, 115, 0.859);
+    background: var(--panel_button_blue_onhover);
+    box-shadow: var(--neon_blue_onhover);
+
+}
+
+
+*::-webkit-scrollbar {
+    width : 4px;
+}
+*::-webkit-scrollbar-thumb{
+    background:rgb(87 107 138 / 58%);
+    border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb:hover{
+    background:rgba(87, 107, 138, 0.73);
+    border-radius: 2px;
 }

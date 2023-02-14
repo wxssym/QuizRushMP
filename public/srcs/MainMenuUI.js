@@ -2,11 +2,8 @@
 function JoinRoomUI(){
     removeElements();
 
-    
-
     div_joinroom = createDiv().id("panel").class("Panel_class").parent('main');
-
-    
+   
     QuizRushLogoImage = createImg('assets/logo.svg','QuizRushMP').mousePressed(refreshPage).parent('panel').class('Logo_class');
     inputbox_addplayer = createInput().class('TextBox_class').parent('panel');
     inputbox_addplayer.attribute('placeholder', 'Username');
@@ -24,7 +21,7 @@ function joinLobby(){
       alert('fill the text boxes, before joining a lobby');
     } else {
       client_name = inputbox_addplayer.value();
-      lobby_name = inputbox_LobbyName.value();
-      socket.emit('joinLobby',client_name,lobby_name);
+      lobbyName = inputbox_LobbyName.value();
+      socket.emit('joinLobby',client_name,lobbyName);
     };
 };

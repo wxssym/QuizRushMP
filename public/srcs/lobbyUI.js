@@ -5,11 +5,11 @@ function LobbyUI(players){
     createDiv().id("panel").class("Panel_class").parent('main');
     createImg('assets/logo.svg','QuizRushMP').mousePressed(refreshPage).parent('panel').class('Logo_class').style('opacity: 0.2');
     createDiv().id("playerCardsCarrousel").class("playerCardsCarrousel").parent('panel');
+
     players.forEach(player => {
       new playerCard(player);
     });
-    createDiv().id("Panel_buttons").class("Lobby_buttons_div_class").parent('panel');
-    createButton('start the game').class('Buttons_class').parent('Panel_buttons').mousePressed(joinLobby);
+
 };
 
 
@@ -25,9 +25,17 @@ function playerCard(player) {
   
   if (player.isHost){
     createDiv().id(player.player_name).class("playerCard").parent('playerCardsCarrousel').style("background: #576b8a");
+    if (player.socketid == socketID){
+      createDiv().id("Panel_buttons").class("Lobby_buttons_div_class").parent('panel');
+      createButton('start the game').class('Buttons_class').parent('Panel_buttons').mousePressed(startGameLobby);
+    }
   } else {
     createDiv().id(player.player_name).class("playerCard").parent('playerCardsCarrousel');
   }
   createImg(this.playerCardAvatar,this.playerCardName).class("playerImage").parent(player.player_name);
   createP(player.player_name).class('playersCardName').parent(player.player_name);
+}
+
+function startGameLobby(){
+  socket.emit('lobbyGameStarted',lobbyName);
 }

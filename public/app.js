@@ -1,16 +1,25 @@
 const socket = io();
 
 var client_name = null;
-var lobby_name = null;
+var lobbyName = null;
+var socketID = null;
 var r = document.querySelector(':root');
 
+socket.on('connect', () => {
+  socketID = socket.id; // an alphanumeric id...
+});
+
 function setup() {
+
+  //console.log(socket.id);
   JoinRoomUI();
 }
 
 function draw() {
 
 }
+
+
 
 //Event listner quand on rejoins un lobby
 socket.on('lobbyJoined', (players)=> LobbyUI(players));
@@ -26,8 +35,8 @@ socket.on('nameTaken', (name)=>{
 });
 
 //Event listner si le lobby est en jeu
-socket.on('in game', (lobbyname)=>{
-  alert(lobbyname + ' is already in the middle of a game');
+socket.on('in game', (lobbyName)=>{
+  alert(lobbyName + ' is already in the middle of a game');
 });
 
 function windowResized() {

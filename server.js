@@ -13,36 +13,37 @@ function EventNewConnection(socket){
     console.log('new connection with a user established : '+ socket.id);
     EventJoinLobby(socket);
     EventDisconnect(socket);
+    EventLobbyGameStarted(socket);
 }
 
 //Joining creating a lobby event
 var lobbies = new Object();
 function EventJoinLobby(socket){
-    socket.on('joinLobby',(name,lobbyname)=>{
-        if (lobbyname in lobbies) {
-            if (lobbies[lobbyname].status == 'in lobby'){
-                if (!isNameTaken(name,lobbyname)) {
-                    lobbies[lobbyname].players.push(new player(name,lobbyname,socket.id));
-                    socket.join(lobbyname);
-                    console.log(`${name} joined lobby : ${lobbyname} hosted by ${lobbies[lobbyname].host}`);
-                    io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
-                    socket.to(lobbyname).emit('playerJoined',lobbies[lobbyname].players);
+    socket.on('joinLobby',(name,lobbyName)=>{
+        if (lobbyName in lobbies) {
+            if (lobbies[lobbyName].status == 'in lobby'){
+                if (!isNameTaken(name,lobbyName)) {
+                    lobbies[lobbyName].players.push(new player(name,lobbyName,socket.id));
+                    socket.join(lobbyName);
+                    console.log(`${name} joined lobby : ${lobbyName} hosted by ${lobbies[lobbyName].host}`);
+                    io.to(socket.id).emit('lobbyJoined',lobbies[lobbyName].players);
+                    socket.to(lobbyName).emit('playerJoined',lobbies[lobbyName].players);
                 } else {
                     io.to(socket.id).emit('nameTaken',name);
                 };
             } else {
-                io.to(socket.id).emit('in game',lobbyname);
+                io.to(socket.id).emit('in game',lobbyName);
             }
         } else {
-            lobbies[lobbyname] = new lobby(lobbyname);
-            lobbies[lobbyname].players.push(new player(name,lobbyname,socket.id));
-            lobbies[lobbyname].host = name;
-            lobbies[lobbyname].players[0].isHost = true;
-            socket.join(lobbyname);
+            lobbies[lobbyName] = new lobby(lobbyName);
+            lobbies[lobbyName].players.push(new player(name,lobbyName,socket.id));
+            lobbies[lobbyName].host = name;
+            lobbies[lobbyName].players[0].isHost = true;
+            socket.join(lobbyName);
             
     
-            console.log(`${name} hosted a lobby ${lobbyname}`);
-            io.to(socket.id).emit('lobbyJoined',lobbies[lobbyname].players);
+            console.log(`${name} hosted a lobby ${lobbyName}`);
+            io.to(socket.id).emit('lobbyJoined',lobbies[lobbyName].players);
         };
     });
 }
@@ -79,22 +80,39 @@ function EventDisconnect(socket){
         };
     });
 }
+
+function EventLobbyGameStarted(socket){
+    socket.on('lobbyGameStarted',(lobbyName)=>{
+        io.to(socket.id).emit('lobbyJoined',lobbies[lobbyName].players);
+        
+        console.log(lobbyName + " game started");
+        lobbies[lobbyName].players.forEach(player => {
+            player.inGame = true;
+        });
+        lobbies[lobbyName].status = 'in game';
+
+
+    });
+}
+
 // class de joueur
 function player(name,room,id) {
     this.player_room = room;
     this.player_name = name;
     this.player_case = 0;
     this.isHost = false;
+    this.inGame = false;
     this.socketid = id;
+    
     this.AvatarUrl = 'https://api.dicebear.com/5.x/thumbs/svg?seed='+this.player_name;
     this.move_case = function (points) {
         this.player_case = this.player_case + points;
     };
 }
 // class de lobby
-function lobby(lobbyname) {
+function lobby(lobbyName) {
     this.players = [];
-    this.lobbyname = lobbyname;
+    this.lobbyName = lobbyName;
     this.host = null;
     this.status = 'in lobby';
 
@@ -112,9 +130,9 @@ function lobby(lobbyname) {
     };
 }
 //vérificateur de nom de joueur
-function isNameTaken(name,lobbyname){
+function isNameTaken(name,lobbyName){
     taken = false;
-    lobbies[lobbyname].players.forEach(player => {
+    lobbies[lobbyName].players.forEach(player => {
         if (player.player_name == name ){
             taken = true;
         } 

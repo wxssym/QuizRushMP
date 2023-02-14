@@ -83,7 +83,7 @@ function EventDisconnect(socket){
 
 function EventLobbyGameStarted(socket){
     socket.on('lobbyGameStarted',(lobbyName)=>{
-        io.to(socket.id).emit('lobbyJoined',lobbies[lobbyName].players);
+        io.to(socket.id).emit('lobbyGameStart',lobbies[lobbyName].players);
         
         console.log(lobbyName + " game started");
         lobbies[lobbyName].players.forEach(player => {

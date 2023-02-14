@@ -29,6 +29,9 @@ socket.on('playerLeave',(players)=> LobbyUI(players))
 //listner for new players
 socket.on('playerJoined', (players)=> newPlayerInLobby(players));
 
+
+socket.on('lobbyGameStart', (players)=> StartGameUI(players));
+
 //Event listner si le nom est pris
 socket.on('nameTaken', (name)=>{
   alert(name + ' is already taken, chose another name');

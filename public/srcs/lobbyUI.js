@@ -9,7 +9,6 @@ function LobbyUI(players){
     players.forEach(player => {
       new playerCard(player);
     });
-
 };
 
 

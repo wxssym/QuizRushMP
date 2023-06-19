@@ -90,8 +90,6 @@ function EventLobbyGameStarted(socket){
             player.inGame = true;
         });
         lobbies[lobbyName].status = 'in game';
-
-
     });
 }
 
